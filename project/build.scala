@@ -8,13 +8,13 @@ import ScalateKeys._
 
 object TestappBuild extends Build {
   val Organization = "com.slotkin"
-  val Name = "Spool"
+  val Name = "Rekki"
   val Version = "0.1.0-SNAPSHOT"
   val ScalaVersion = "2.11.8"
   val ScalatraVersion = "2.5.0"
 
   lazy val project = Project (
-    "Spool",
+    "Rekki",
     file("."),
     settings = seq(com.typesafe.sbt.SbtStartScript.startScriptForClassesSettings: _*) ++ ScalatraPlugin.scalatraSettings ++ Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
       organization := Organization,

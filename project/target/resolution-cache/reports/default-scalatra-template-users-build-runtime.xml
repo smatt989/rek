@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="ivy-report.xsl"?>
+<ivy-report version="1.0">
+	<info
+		organisation="default"
+		module="scalatra-template-users-build"
+		revision="0.1-SNAPSHOT"
+		extra-scalaVersion="2.10"
+		extra-sbtVersion="0.13"
+		conf="runtime"
+		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, sources, docs, pom, scala-tool"
+		date="20170329163508"/>
+	<dependencies>
+		<module organisation="com.typesafe.sbt" name="sbt-start-script">
+			<revision name="0.10.0" status="release" pubdate="20130911085510" resolver="sbt-chain" artresolver="sbt-chain" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, default(compile)" position="5">
+				<metadata-artifact status="no" details="" size="1749" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-start-script/ivy-0.10.0.xml" searched="false" origin-is-local="false" origin-location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.typesafe.sbt/sbt-start-script/scala_2.10/sbt_0.13/0.10.0/ivys/ivy.xml"/>
+				<caller organisation="default" name="scalatra-template-users-build" conf="compile, runtime" rev="0.10.0" rev-constraint-default="0.10.0" rev-constraint-dynamic="0.10.0" callerrev="0.1-SNAPSHOT" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
+				<artifacts>
+					<artifact name="sbt-start-script" type="jar" ext="jar" status="no" details="" size="66180" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.typesafe.sbt/sbt-start-script/jars/sbt-start-script-0.10.0.jar">
+						<origin-location is-local="false" location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.typesafe.sbt/sbt-start-script/scala_2.10/sbt_0.13/0.10.0/jars/sbt-start-script.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.github.mpeltonen" name="sbt-idea">
+			<revision name="1.5.2" status="release" pubdate="20131013090137" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://your.project.url" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="3">
+				<license name="BSD-style" url="http://www.opensource.org/licenses/BSD-3-Clause"/>
+				<metadata-artifact status="no" details="" size="3088" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/ivy-1.5.2.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/com/github/mpeltonen/sbt-idea_2.10_0.13/1.5.2/sbt-idea-1.5.2.pom"/>
+				<caller organisation="default" name="scalatra-template-users-build" conf="compile, runtime" rev="1.5.2" rev-constraint-default="1.5.2" rev-constraint-dynamic="1.5.2" callerrev="0.1-SNAPSHOT" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
+				<artifacts>
+					<artifact name="sbt-idea" type="jar" ext="jar" status="no" details="" size="336778" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.github.mpeltonen/sbt-idea/jars/sbt-idea-1.5.2.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/com/github/mpeltonen/sbt-idea_2.10_0.13/1.5.2/sbt-idea-1.5.2.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="commons-io" name="commons-io">
+			<revision name="2.0.1" status="release" pubdate="20101226121931" resolver="sbt-chain" artresolver="sbt-chain" homepage="http://commons.apache.org/io/" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*), master" position="4">
+				<license name="The Apache Software License, Version 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+				<metadata-artifact status="no" details="" size="6485" time="0" location="/Users/matt/.ivy2/cache/commons-io/commons-io/ivy-2.0.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/commons-io/commons-io/2.0.1/commons-io-2.0.1.pom"/>
+				<caller organisation="com.github.mpeltonen" name="sbt-idea" conf="default, compile, runtime, master" rev="2.0.1" rev-constraint-default="2.0.1" rev-constraint-dynamic="2.0.1" callerrev="1.5.2"/>
+				<artifacts>
+					<artifact name="commons-io" type="jar" ext="jar" status="no" details="" size="159509" time="0" location="/Users/matt/.ivy2/cache/commons-io/commons-io/jars/commons-io-2.0.1.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/commons-io/commons-io/2.0.1/commons-io-2.0.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="org.scalatra.sbt" name="scalatra-sbt">
+			<revision name="0.5.1" status="release" pubdate="20160206203054" resolver="sbt-chain" artresolver="sbt-chain" homepage="https://github.com/scalatra/scalatra-sbt/" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="1">
+				<license name="BSD License" url="https://github.com/scalatra/scalatra-sbt/blob/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="3450" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/org.scalatra.sbt/scalatra-sbt/ivy-0.5.1.xml" searched="false" origin-is-local="false" origin-location="https://repo1.maven.org/maven2/org/scalatra/sbt/scalatra-sbt_2.10_0.13/0.5.1/scalatra-sbt-0.5.1.pom"/>
+				<caller organisation="default" name="scalatra-template-users-build" conf="compile, runtime" rev="0.5.1" rev-constraint-default="0.5.1" rev-constraint-dynamic="0.5.1" callerrev="0.1-SNAPSHOT" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
+				<artifacts>
+					<artifact name="scalatra-sbt" type="jar" ext="jar" status="no" details="" size="64295" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/org.scalatra.sbt/scalatra-sbt/jars/scalatra-sbt-0.5.1.jar">
+						<origin-location is-local="false" location="https://repo1.maven.org/maven2/org/scalatra/sbt/scalatra-sbt_2.10_0.13/0.5.1/scalatra-sbt-0.5.1.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.earldouglas" name="xsbt-web-plugin">
+			<revision name="2.1.0" status="release" pubdate="20151115184442" resolver="sbt-chain" artresolver="sbt-chain" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, runtime(*), master(compile), runtime, compile(*)" position="2">
+				<license name="BSD New" url="http://opensource.org/licenses/BSD-3-Clause"/>
+				<metadata-artifact status="no" details="" size="1793" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.earldouglas/xsbt-web-plugin/ivy-2.1.0.xml" searched="false" origin-is-local="false" origin-location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.earldouglas/xsbt-web-plugin/scala_2.10/sbt_0.13/2.1.0/ivys/ivy.xml"/>
+				<caller organisation="org.scalatra.sbt" name="scalatra-sbt" conf="default, compile, runtime, master" rev="2.1.0" rev-constraint-default="2.1.0" rev-constraint-dynamic="2.1.0" callerrev="0.5.1" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
+				<artifacts>
+					<artifact name="xsbt-web-plugin" type="jar" ext="jar" status="no" details="" size="103695" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.earldouglas/xsbt-web-plugin/jars/xsbt-web-plugin-2.1.0.jar">
+						<origin-location is-local="false" location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.earldouglas/xsbt-web-plugin/scala_2.10/sbt_0.13/2.1.0/jars/xsbt-web-plugin.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+		<module organisation="com.mojolly.scalate" name="xsbt-scalate-generator">
+			<revision name="0.5.0" status="release" pubdate="20140601094921" resolver="sbt-chain" artresolver="sbt-chain" extra-scalaVersion="2.10" extra-sbtVersion="0.13" downloaded="false" searched="false" default="false" conf="compile, default(compile)" position="0">
+				<license name="MIT" url="https://github.com/backchatio/xsbt-scalate-generate/blob/master/LICENSE"/>
+				<metadata-artifact status="no" details="" size="1594" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.mojolly.scalate/xsbt-scalate-generator/ivy-0.5.0.xml" searched="false" origin-is-local="false" origin-location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.mojolly.scalate/xsbt-scalate-generator/scala_2.10/sbt_0.13/0.5.0/ivys/ivy.xml"/>
+				<caller organisation="default" name="scalatra-template-users-build" conf="compile, runtime" rev="0.5.0" rev-constraint-default="0.5.0" rev-constraint-dynamic="0.5.0" callerrev="0.1-SNAPSHOT" extra-scalaVersion="2.10" extra-sbtVersion="0.13"/>
+				<artifacts>
+					<artifact name="xsbt-scalate-generator" type="jar" ext="jar" status="no" details="" size="42239" time="0" location="/Users/matt/.ivy2/cache/scala_2.10/sbt_0.13/com.mojolly.scalate/xsbt-scalate-generator/jars/xsbt-scalate-generator-0.5.0.jar">
+						<origin-location is-local="false" location="https://repo.scala-sbt.org/scalasbt/sbt-plugin-releases/com.mojolly.scalate/xsbt-scalate-generator/scala_2.10/sbt_0.13/0.5.0/jars/xsbt-scalate-generator.jar"/>
+					</artifact>
+				</artifacts>
+			</revision>
+		</module>
+	</dependencies>
+</ivy-report>

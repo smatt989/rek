@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Spool.iml" filepath="$PROJECT_DIR$/.idea/modules/Spool.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Spool-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Spool-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Rekki.iml" filepath="$PROJECT_DIR$/.idea/modules/Rekki.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Rekki-build.iml" filepath="$PROJECT_DIR$/.idea/modules/Rekki-build.iml" />
     </modules>
   </component>
 </project>

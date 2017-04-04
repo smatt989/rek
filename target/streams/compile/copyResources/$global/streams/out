@@ -1,4 +1,4 @@
 [0m[[0mdebug[0m] [0mCopy resource mappings: [0m
-[0m[[0mdebug[0m] [0m	(/Users/matt/Desktop/development/spool/src/main/resources/APNsAuthKey_VLPZR3288Q.p8,/Users/matt/Desktop/development/spool/target/scala-2.11/classes/APNsAuthKey_VLPZR3288Q.p8)[0m
-[0m[[0mdebug[0m] [0m	(/Users/matt/Desktop/development/spool/src/main/resources/c3p0.properties,/Users/matt/Desktop/development/spool/target/scala-2.11/classes/c3p0.properties)[0m
-[0m[[0mdebug[0m] [0m	(/Users/matt/Desktop/development/spool/src/main/resources/logback.xml,/Users/matt/Desktop/development/spool/target/scala-2.11/classes/logback.xml)[0m
+[0m[[0mdebug[0m] [0m	(/Users/matt/Desktop/development/rek/src/main/resources/APNsAuthKey_VLPZR3288Q.p8,/Users/matt/Desktop/development/rek/target/scala-2.11/classes/APNsAuthKey_VLPZR3288Q.p8)[0m
+[0m[[0mdebug[0m] [0m	(/Users/matt/Desktop/development/rek/src/main/resources/c3p0.properties,/Users/matt/Desktop/development/rek/target/scala-2.11/classes/c3p0.properties)[0m
+[0m[[0mdebug[0m] [0m	(/Users/matt/Desktop/development/rek/src/main/resources/logback.xml,/Users/matt/Desktop/development/rek/target/scala-2.11/classes/logback.xml)[0m
