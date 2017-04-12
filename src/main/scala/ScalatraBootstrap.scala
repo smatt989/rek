@@ -15,13 +15,21 @@ class ScalatraBootstrap extends LifeCycle {
   override def init(context: ServletContext): Unit = {
     if(isProduction(context)){
       val DRIVER = "org.postgresql.Driver"
-      val DB_CONNECTION = System.getenv("JDBC_DATABASE_URL")
-      val DB_USER = System.getenv("JDBC_DATABASE_USERNAME")
-      val DB_PASSWORD = System.getenv("JDBC_DATABASE_PASSWORD")
+
+      val dbName = System.getenv("RDS_DB_NAME")
+      val userName = System.getenv("RDS_USERNAME")
+      val password = System.getenv("RDS_PASSWORD")
+      val hostname = System.getenv("RDS_HOSTNAME")
+      val port = System.getenv("RDS_PORT")
+      val jdbcUrl = "jdbc:postgresql://"+hostname+":"+port+"/"+dbName
+
+      //val DB_CONNECTION = System.getenv("JDBC_DATABASE_URL")
+      //val DB_USER = System.getenv("JDBC_DATABASE_USERNAME")
+      //val DB_PASSWORD = System.getenv("JDBC_DATABASE_PASSWORD")
       cpds.setDriverClass(DRIVER)
-      cpds.setJdbcUrl(DB_CONNECTION)
-      cpds.setUser(DB_USER)
-      cpds.setPassword(DB_PASSWORD)
+      cpds.setJdbcUrl(jdbcUrl)
+      cpds.setUser(userName)
+      cpds.setPassword(password)
     }
 
     val db = Database.forDataSource(cpds)

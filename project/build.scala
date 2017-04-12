@@ -4,19 +4,20 @@ import org.scalatra.sbt._
 import org.scalatra.sbt.PluginKeys._
 import com.earldouglas.xwp.JettyPlugin
 import com.mojolly.scalate.ScalatePlugin._
+import com.github.retronym.SbtOneJar
 import ScalateKeys._
 
 object TestappBuild extends Build {
   val Organization = "com.slotkin"
   val Name = "Rekki"
-  val Version = "0.1.0-SNAPSHOT"
+  val Version = "0.1.3-SNAPSHOT"
   val ScalaVersion = "2.11.8"
   val ScalatraVersion = "2.5.0"
 
   lazy val project = Project (
     "Rekki",
     file("."),
-    settings = seq(com.typesafe.sbt.SbtStartScript.startScriptForClassesSettings: _*) ++ ScalatraPlugin.scalatraSettings ++ Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ Seq(
+    settings = seq(com.typesafe.sbt.SbtStartScript.startScriptForClassesSettings: _*) ++ ScalatraPlugin.scalatraSettings ++ Defaults.defaultSettings ++ ScalatraPlugin.scalatraWithJRebel ++ scalateSettings ++ SbtOneJar.oneJarSettings ++ Seq(
       organization := Organization,
       name := Name,
       version := Version,
