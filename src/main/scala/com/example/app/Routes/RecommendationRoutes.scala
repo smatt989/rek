@@ -1,6 +1,6 @@
 package com.example.app.Routes
 
-import com.example.app.models.{Recommendation, RecommendationJsonRequest, Review, ReviewJsonRequest}
+import com.example.app.models._
 import com.example.app.{AuthenticationSupport, SlickRoutes}
 
 /**
@@ -52,5 +52,16 @@ trait RecommendationRoutes extends SlickRoutes with AuthenticationSupport {
     contentType = formats("json")
 
     Review.getAll
+  }
+
+  post("/recommendations/thank") {
+    contentType = formats("json")
+    authenticate()
+
+    val senderId = user.id
+
+    val thank = parsedBody.extract[ThankJsonRequest].toModel(senderId)
+
+    Thank.makeAThank(thank)
   }
 }

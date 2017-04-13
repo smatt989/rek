@@ -82,6 +82,19 @@ object Tables {
     def destination = foreignKey("REVIEWS_TO_DESTINATION_FK", destinationId, destinations)(_.id)
   }
 
+  class Thanks(tag: Tag) extends Table[(Int, Int, Int, Int)](tag, "THANKS") with HasIdColumn[Int] {
+    def id = column[Int]("THANKS_ID", O.PrimaryKey, O.AutoInc)
+    def senderUserId = column[Int]("SENDER_USER_ID")
+    def receiverUserId = column[Int]("RECEIVER_USER_ID")
+    def destinationId = column[Int]("DESTINATION_ID")
+
+    def * = (id, senderUserId, receiverUserId, destinationId)
+
+    def sender = foreignKey("THANKS_SENDER_TO_USER_FK", senderUserId, users)(_.id)
+    def receiver = foreignKey("THANKS_RECEIVER_TO_USER_FK", receiverUserId, users)(_.id)
+    def destination = foreignKey("THANKS_TO_DESTINATION_FK", destinationId, destinations)(_.id)
+  }
+
   val users = TableQuery[Users]
   val deviceTokens = TableQuery[DeviceTokens]
   val userSessions = TableQuery[UserSessions]
@@ -93,8 +106,9 @@ object Tables {
   val recommendations = TableQuery[Recommendations]
   val reviews = TableQuery[Reviews]
 
+  val thanks = TableQuery[Thanks]
 
-  val schemas = (users.schema ++ userSessions.schema ++ deviceTokens.schema ++ userConnections.schema ++ destinations.schema ++ recommendations.schema ++ reviews.schema)
+  val schemas = (users.schema ++ userSessions.schema ++ deviceTokens.schema ++ userConnections.schema ++ destinations.schema ++ recommendations.schema ++ reviews.schema ++ thanks.schema)
 
 
   // DBIO Action which creates the schema
