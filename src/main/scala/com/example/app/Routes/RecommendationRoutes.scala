@@ -37,7 +37,9 @@ trait RecommendationRoutes extends SlickRoutes with AuthenticationSupport {
 
     val review = parsedBody.extract[ReviewJsonRequest]
 
-    Review.saveReviewByUserForDestination(user.id, review)
+    val u = user
+
+    Review.saveReviewByUserForDestination(u.id, review).map(_.toJson(u.toJson))
   }
 
   get("/recommendations") {
