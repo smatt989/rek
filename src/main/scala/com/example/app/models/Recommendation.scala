@@ -38,13 +38,14 @@ object Recommendation extends SlickDbObject[Recommendation, (Int, Int, Int, Int,
         newlySaved.foreach(saved => {
           val sendername = senders(saved.senderUserId)
           val receiverDeviceToken = recipientDeviceIds(saved.receiverUserId)
-          val adventure = destinations(saved.destinationId)
-/*          if(receiverDeviceToken.isDefined) {
+          val destination = destinations(saved.destinationId)
+          //TODO: SHOULD ONLY HAPPEN IF FOLLOWING
+          if(receiverDeviceToken.isDefined) {
             System.out.println("Making push notification");
-            PushNotificationManager.makePushNotification(sendername + " shared an adventure, " + adventure + ", with you", receiverDeviceToken.get)
+            PushNotificationManager.makePushNotification(sendername + " recommends you visit " + destination, receiverDeviceToken.get)
           } else {
             System.out.println("Not pushing");
-          }*/
+          }
         })
 
         val alreadySavedByTriple = alreadySaved.map(a => (a.senderUserId, a.receiverUserId, a.destinationId) -> a).toMap

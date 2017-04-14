@@ -1,7 +1,10 @@
 package com.example.app.Routes
 
 import com.example.app.models._
-import com.example.app.{AuthenticationSupport, SlickRoutes}
+import com.example.app.{AuthenticationSupport, PushNotificationManager, SlickRoutes}
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
 
 /**
   * Created by matt on 3/29/17.
@@ -62,6 +65,11 @@ trait RecommendationRoutes extends SlickRoutes with AuthenticationSupport {
 
     val thank = parsedBody.extract[ThankJsonRequest].toModel(senderId)
 
-    Thank.makeAThank(thank)
+    val saved = Thank.makeAThank(thank)
+
+    val destination = Await.result(Destination.byId(saved.destinationId), Duration.Inf)
+    PushNotificationManager.pushNotificationsFor(user.username + " thanked you for your recommendation to "+destination.name, Seq(saved.receiverUserId))
+
+    saved
   }
 }

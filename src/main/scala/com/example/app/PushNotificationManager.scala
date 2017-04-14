@@ -7,6 +7,8 @@ import com.relayrides.pushy.apns._
 import com.relayrides.pushy.apns.util.{ApnsPayloadBuilder, SimpleApnsPushNotification, TokenUtil}
 import java.util.concurrent.{Future => JFuture}
 
+import com.example.app.models.DeviceToken
+
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Promise, Future => SFuture}
 import scala.util.Try
@@ -14,13 +16,13 @@ import scala.util.Try
 object PushNotificationManager {
 
   val apnsClient = new ApnsClientBuilder().build()
-  val topic = "com.rekki.app"
+  val topic = "com.rek.app"
   val teamId = System.getenv("REKKI_TEAM_ID")
   val keyId = System.getenv("APNS_KEY_ID")
 
-  val file = new File("src/main/resources/APNsAuthKey_VLPZR3288Q.p8")
+  val file = new File("src/main/resources/APNsAuthKey_A3Q9C7HYSV.p8")
 
-  apnsClient.registerSigningKey(new File("src/main/resources/APNsAuthKey_VLPZR3288Q.p8"),
+  apnsClient.registerSigningKey(new File("src/main/resources/APNsAuthKey_A3Q9C7HYSV.p8"),
     teamId, keyId, topic)
 
   //val developerGateway = "gateway.sandbox.push.apple.com"
@@ -36,6 +38,13 @@ object PushNotificationManager {
     System.out.println("Establishing connection...")
 
     Await.result(future, Duration.Inf)
+  }
+
+  def pushNotificationsFor(message: String, userIds: Seq[Int]) = {
+    val tokens = DeviceToken.getByUserIds(userIds)
+    userIds.map(user => {
+      tokens(user).map(token => makePushNotification(message, token))
+    })
   }
 
   def makePushNotification(message: String, deviceToken: String) = {
