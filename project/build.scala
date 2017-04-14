@@ -10,7 +10,7 @@ import ScalateKeys._
 object TestappBuild extends Build {
   val Organization = "com.slotkin"
   val Name = "Rekki"
-  val Version = "0.1.7-SNAPSHOT"
+  val Version = "0.1.12-SNAPSHOT"
   val ScalaVersion = "2.11.8"
   val ScalatraVersion = "2.5.0"
 
@@ -47,6 +47,7 @@ object TestappBuild extends Build {
         "org.eclipse.jetty.alpn" % "alpn-api" % "1.1.3.v20160715",
         "com.relayrides" % "pushy" % "0.9.2"
       ),
+      mappings in SbtOneJar.oneJar += (file("src/main/resources/APNsAuthKey_A3Q9C7HYSV.p8"),"src/main/resources/APNsAuthKey_A3Q9C7HYSV.p8"),
       scalateTemplateConfig in Compile <<= (sourceDirectory in Compile){ base =>
         Seq(
           TemplateConfig(

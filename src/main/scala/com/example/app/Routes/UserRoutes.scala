@@ -17,9 +17,13 @@ trait UserRoutes extends SlickRoutes with AuthenticationSupport{
 
   post("/users/search") {
     contentType = formats("json")
+    authenticate()
+
+    val userId = user.id
+
     val query = {params("query")}
 
-    User.searchUserName(query)
+    User.searchUserName(query).map(_.filterNot(_.id == userId))
   }
 
   post("/users/connections/create") {
@@ -29,7 +33,7 @@ trait UserRoutes extends SlickRoutes with AuthenticationSupport{
     val connectionRequest = parsedBody.extract[ConnectionRequestJson]
     val connection = connectionRequest.newConnection(user.id)
 
-    UserConnection.safeSave(connection)
+    UserConnection.safeSave(connection, user)
   }
 
   post("/users/connections/delete") {

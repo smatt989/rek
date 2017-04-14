@@ -20,9 +20,7 @@ object PushNotificationManager {
   val teamId = System.getenv("REKKI_TEAM_ID")
   val keyId = System.getenv("APNS_KEY_ID")
 
-  val file = new File("src/main/resources/APNsAuthKey_A3Q9C7HYSV.p8")
-
-  apnsClient.registerSigningKey(new File("src/main/resources/APNsAuthKey_A3Q9C7HYSV.p8"),
+  apnsClient.registerSigningKey(Thread.currentThread.getContextClassLoader.getResourceAsStream("src/main/resources/APNsAuthKey_A3Q9C7HYSV.p8"),
     teamId, keyId, topic)
 
   //val developerGateway = "gateway.sandbox.push.apple.com"

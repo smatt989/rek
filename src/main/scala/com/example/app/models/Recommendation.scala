@@ -35,12 +35,13 @@ object Recommendation extends SlickDbObject[Recommendation, (Int, Int, Int, Int,
         val recipientDeviceIds = DeviceToken.getByUserIds(newlySaved.map(_.receiverUserId))
         val senders = Await.result(User.byIds(newlySaved.map(_.senderUserId)), Duration.Inf).map(a => a.id -> a.username).toMap
         val destinations = Await.result(Destination.byIds(newlySaved.map(_.destinationId)), Duration.Inf).map(a => a.id -> a.name).toMap
+        val availableRecipients = Await.result(UserConnection.getByReceiverId(senderId), Duration.Inf).map(c => c.senderUserId).toSet
         newlySaved.foreach(saved => {
           val sendername = senders(saved.senderUserId)
           val receiverDeviceToken = recipientDeviceIds(saved.receiverUserId)
           val destination = destinations(saved.destinationId)
           //TODO: SHOULD ONLY HAPPEN IF FOLLOWING
-          if(receiverDeviceToken.isDefined) {
+          if(receiverDeviceToken.isDefined && availableRecipients.contains(saved.receiverUserId)) {
             System.out.println("Making push notification");
             PushNotificationManager.makePushNotification(sendername + " recommends you visit " + destination, receiverDeviceToken.get)
           } else {

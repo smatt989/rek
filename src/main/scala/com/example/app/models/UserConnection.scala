@@ -1,6 +1,6 @@
 package com.example.app.models
 
-import com.example.app.{HasIntId, SlickDbObject, Tables}
+import com.example.app.{HasIntId, PushNotificationManager, SlickDbObject, Tables}
 import slick.driver.PostgresDriver.api._
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -33,10 +33,12 @@ object UserConnection extends SlickDbObject[UserConnection, (Int, Int, Int), Tab
   def classToTuple(a: UserConnection) =
     (a.id, a.senderUserId, a.receiverUserId)
 
-  def safeSave(connection: UserConnection) = {
+  def safeSave(connection: UserConnection, sender: User) = {
     findConnection(connection.senderUserId, connection.receiverUserId).flatMap(optionalConnection => {
       if (optionalConnection.isEmpty) {
-        create(connection)
+        create(connection).map(a => {
+          PushNotificationManager.pushNotificationsFor(sender.username +" has started following you", Seq(a.receiverUserId))
+        })
       } else {
         Future.apply(optionalConnection.get)
       }
