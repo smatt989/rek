@@ -48,7 +48,7 @@ object Review extends Updatable[Review, (Int, Int, Int, Boolean, Option[String])
   }
 
   def getReviewsForUserForDestination(userId: Int, destinationId: Int) = {
-    val users = Await.result(UserConnection.getBySenderId(userId), Duration.Inf).map(_.receiverUserId)
+    val users = Await.result(UserConnection.getBySenderId(userId), Duration.Inf).map(_.receiverUserId) :+ userId
     db.run(
       table.filter(a => a.userId.inSet(users) && a.destinationId === destinationId).result
     ).map(_.map(reify))

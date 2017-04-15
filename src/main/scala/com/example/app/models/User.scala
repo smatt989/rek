@@ -90,10 +90,10 @@ object User extends Updatable[User, (Int, String, String, String), Tables.Users]
   }
 
   def uniqueUsername(username: String) =
-    db.run(table.filter(_.username === username).result).map(_.isEmpty)
+    db.run(table.filter(_.username.toLowerCase === username.toLowerCase()).result).map(_.isEmpty)
 
   def uniqueEmail(email: String) =
-    db.run(table.filter(_.email === email).result).map(_.isEmpty)
+    db.run(table.filter(_.email.toLowerCase === email.toLowerCase()).result).map(_.isEmpty)
 
   def createNewUser(userCreate: UserCreate) = {
     val usernameIsUnique = uniqueUsername(userCreate.username)

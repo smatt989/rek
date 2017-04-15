@@ -10,7 +10,7 @@ import ScalateKeys._
 object TestappBuild extends Build {
   val Organization = "com.slotkin"
   val Name = "Rekki"
-  val Version = "0.1.12-SNAPSHOT"
+  val Version = "0.1.15-SNAPSHOT"
   val ScalaVersion = "2.11.8"
   val ScalatraVersion = "2.5.0"
 
