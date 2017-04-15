@@ -26,6 +26,15 @@ trait DestinationRoutes extends SlickRoutes with AuthenticationSupport {
     DestinationForUser.getDestinationsForUser(user.id)
   }
 
+  get("/destinations/users/:reviewerId/personalized") {
+    contentType = formats("json")
+    authenticate()
+
+    val reviewerId = {params("reviewerId")}.toInt
+
+    DestinationForUser.getDestinationsReviewedByUserForUser(reviewerId, user.id)
+  }
+
   get("/destinations/one/personalized") {
     contentType = formats("json")
     authenticate()

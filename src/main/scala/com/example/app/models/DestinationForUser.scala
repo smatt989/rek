@@ -28,25 +28,57 @@ object DestinationForUser {
         destinations <- Destination.byIds(reviews.map(_.destinationId) ++ ownReviews.map(_.destinationId) ++ suggestions.map(_.destination.id))
         thanks <- Thank.thanksForUserAndDestinations(userId, destinations.map(_.id))
       } yield (suggestions, reviews, ownReviews, users, destinations, thanks)).map{ case (sugs, revs, ownRevs, us, ds, ts) => {
-        val allDestinations = ds.distinct
-        val userById = us.map(u => u.id -> u).toMap
-        val suggestionsByDestinationId = sugs.groupBy(_.destination.id)
-        val reviewsByDestinationId = revs.groupBy(_.destinationId).mapValues(_.map(a => a.toJson(userById(a.userId))))
-        val myReviewsByDestinationId = ownRevs.map(o => o.destinationId -> o.toJson(userById(o.userId))).toMap
-        val (thanksSent, thanksReceived) = ts.partition(_.senderUserId == userId)
-        val thanksReceivedByDestination = thanksReceived.groupBy(_.destinationId)
-        val thanksSentByDestination = thanksSent.groupBy(_.destinationId)
-        allDestinations.map(d => {
-          DestinationForUser(
-            d,
-            suggestionsByDestinationId.get(d.id).getOrElse(Nil),
-            reviewsByDestinationId.get(d.id).getOrElse(Nil),
-            myReviewsByDestinationId.get(d.id),
-            thanksSentByDestination.get(d.id).getOrElse(Nil),
-            thanksReceivedByDestination.get(d.id).getOrElse(Nil)
-          )
-        })
-      }}
+      val allDestinations = ds.distinct
+      val userById = us.map(u => u.id -> u).toMap
+      val suggestionsByDestinationId = sugs.groupBy(_.destination.id)
+      val reviewsByDestinationId = revs.groupBy(_.destinationId).mapValues(_.map(a => a.toJson(userById(a.userId))))
+      val myReviewsByDestinationId = ownRevs.map(o => o.destinationId -> o.toJson(userById(o.userId))).toMap
+      val (thanksSent, thanksReceived) = ts.partition(_.senderUserId == userId)
+      val thanksReceivedByDestination = thanksReceived.groupBy(_.destinationId)
+      val thanksSentByDestination = thanksSent.groupBy(_.destinationId)
+      allDestinations.map(d => {
+        DestinationForUser(
+          d,
+          suggestionsByDestinationId.get(d.id).getOrElse(Nil),
+          reviewsByDestinationId.get(d.id).getOrElse(Nil),
+          myReviewsByDestinationId.get(d.id),
+          thanksSentByDestination.get(d.id).getOrElse(Nil),
+          thanksReceivedByDestination.get(d.id).getOrElse(Nil)
+        )
+      })
+    }}
+
+  }
+
+  def getDestinationsReviewedByUserForUser(reviewerUserId: Int, userId: Int) = {
+    (
+      for {
+        suggestions <- Recommendation.recommendationsByReceiverId(userId)
+        reviews <- Review.getReviewsForUser(userId)
+        ownReviews <- Review.getReviewsByUser(userId)
+        users <- User.byIds(reviews.map(_.userId) :+ userId).map(_.map(_.toJson))
+        destinations <- Destination.byIds(reviews.filter(_.userId == reviewerUserId).map(_.destinationId))
+        thanks <- Thank.thanksForUserAndDestinations(userId, destinations.map(_.id))
+      } yield (suggestions, reviews, ownReviews, users, destinations, thanks)).map{ case (sugs, revs, ownRevs, us, ds, ts) => {
+      val allDestinations = ds.distinct
+      val userById = us.map(u => u.id -> u).toMap
+      val suggestionsByDestinationId = sugs.groupBy(_.destination.id)
+      val reviewsByDestinationId = revs.groupBy(_.destinationId).mapValues(_.map(a => a.toJson(userById(a.userId))))
+      val myReviewsByDestinationId = ownRevs.map(o => o.destinationId -> o.toJson(userById(o.userId))).toMap
+      val (thanksSent, thanksReceived) = ts.partition(_.senderUserId == userId)
+      val thanksReceivedByDestination = thanksReceived.groupBy(_.destinationId)
+      val thanksSentByDestination = thanksSent.groupBy(_.destinationId)
+      allDestinations.map(d => {
+        DestinationForUser(
+          d,
+          suggestionsByDestinationId.get(d.id).getOrElse(Nil),
+          reviewsByDestinationId.get(d.id).getOrElse(Nil),
+          myReviewsByDestinationId.get(d.id),
+          thanksSentByDestination.get(d.id).getOrElse(Nil),
+          thanksReceivedByDestination.get(d.id).getOrElse(Nil)
+        )
+      })
+    }}
 
   }
 

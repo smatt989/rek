@@ -32,7 +32,7 @@ trait DBManagementRoutes extends SlickRoutes with AuthenticationSupport{
 
   get("/db/migration"){
     authenticate()
-    new Migration1().run
+    new Migration2().run
   }
 
 
