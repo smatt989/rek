@@ -38,7 +38,7 @@ class Migration3() {
     AppGlobals.db().run(
       sqlu"""
          ALTER TABLE REVIEWS
-         ADD COLUMN RATING Float NULL;
+         ADD COLUMN RATING FLOAT NULL;
 
          UPDATE REVIEWS
          SET RATING = 4
@@ -52,7 +52,7 @@ class Migration3() {
          DROP COLUMN POSITIVE_RATING;
 
          ALTER TABLE REVIEWS
-         ALTER COLUMN RATING Float;"""
+         ALTER COLUMN RATING SET NOT NULL;"""
     )
   }
 
@@ -74,7 +74,7 @@ class Migration3() {
          DROP COLUMN RATING;
 
          ALTER TABLE reviews
-         ALTER COLUMN POSITIVE_RATING BOOLEAN;"""
+         ALTER COLUMN POSITIVE_RATING SET NOT NULL;"""
     )
   }
 }
