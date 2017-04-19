@@ -7,23 +7,23 @@ import scala.concurrent.Await
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration.Duration
 
-case class Review(id: Int, userId: Int, destinationId: Int, positiveRating: Boolean, note: Option[String]) extends HasIntId[Review] {
+case class Review(id: Int, userId: Int, destinationId: Int, rating: Double, note: Option[String]) extends HasIntId[Review] {
   def updateId(id: Int) = this.copy(id = id)
   def toJson(user: UserJson) =
-    ReviewJson(user, destinationId, positiveRating, note)
+    ReviewJson(user, destinationId, rating, note)
 }
 
-case class ReviewJsonRequest(destinationId: Int, positiveRating: Boolean, note: Option[String]) {
+case class ReviewJsonRequest(destinationId: Int, rating: Double, note: Option[String]) {
   def newReview(userId: Int) =
-    Review(0, userId, destinationId, positiveRating, note)
+    Review(0, userId, destinationId, rating, note)
 }
 
-case class ReviewJson(user: UserJson, destinationId: Int, positiveRating: Boolean, note: Option[String])
+case class ReviewJson(user: UserJson, destinationId: Int, rating: Double, note: Option[String])
 
-object Review extends Updatable[Review, (Int, Int, Int, Boolean, Option[String]), Tables.Reviews] {
+object Review extends Updatable[Review, (Int, Int, Int, Double, Option[String]), Tables.Reviews] {
   val table = Tables.reviews
 
-  def reify(tuple: (Int, Int, Int, Boolean, Option[String])) =
+  def reify(tuple: (Int, Int, Int, Double, Option[String])) =
     (apply _).tupled(tuple)
 
   def classToTuple(a: Review) =
@@ -62,6 +62,6 @@ object Review extends Updatable[Review, (Int, Int, Int, Boolean, Option[String])
     db.run(table.filter(a => a.userId === userId && a.destinationId === destinationId).result).map(_.headOption.map(reify))
 
   def updateQuery(a: Review) = table.filter(_.id === a.id)
-    .map(x => (x.positiveRating, x.note))
-    .update((a.positiveRating, a.note))
+    .map(x => (x.rating, x.note))
+    .update((a.rating, a.note))
 }

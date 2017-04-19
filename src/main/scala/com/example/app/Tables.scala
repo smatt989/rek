@@ -69,14 +69,14 @@ object Tables {
     def destination = foreignKey("RECOMMENDATIONS_TO_DESTINATION_FK", destinationId, destinations)(_.id)
   }
 
-  class Reviews(tag: Tag) extends Table[(Int, Int, Int, Boolean, Option[String])](tag, "REVIEWS") with HasIdColumn[Int] {
+  class Reviews(tag: Tag) extends Table[(Int, Int, Int, Double, Option[String])](tag, "REVIEWS") with HasIdColumn[Int] {
     def id = column[Int]("REVIEW_ID", O.PrimaryKey, O.AutoInc)
     def userId = column[Int]("USER_ID")
     def destinationId = column[Int]("DESTINATION_ID")
-    def positiveRating = column[Boolean]("POSITIVE_RATING")
+    def rating = column[Double]("RATING")
     def note = column[Option[String]]("NOTE")
 
-    def * = (id, userId, destinationId, positiveRating, note)
+    def * = (id, userId, destinationId, rating, note)
 
     def user = foreignKey("REVIEWS_TO_USER_FK", userId, users)(_.id)
     def destination = foreignKey("REVIEWS_TO_DESTINATION_FK", destinationId, destinations)(_.id)
