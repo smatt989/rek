@@ -89,6 +89,20 @@ object User extends Updatable[User, (Int, String, String, String), Tables.Users]
       None
   }
 
+  def validUsername(username: String) =
+    username.size >= 3
+
+  private val emailRegex = """^[a-zA-Z0-9\.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$""".r
+
+  def validEmail(email: String) = {
+    email match {
+      case null => false
+      case e if e.trim.isEmpty => false
+      case e if emailRegex.findFirstMatchIn(e).isDefined => true
+      case _ => false
+    }
+  }
+
   def uniqueUsername(username: String) =
     db.run(table.filter(_.username.toLowerCase === username.toLowerCase()).result).map(_.isEmpty)
 

@@ -4,6 +4,9 @@ import com.example.app.models._
 import com.example.app.{AuthenticationSupport, SessionTokenStrategy, SlickRoutes}
 import org.scalatra.Ok
 
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+
 trait UserRoutes extends SlickRoutes with AuthenticationSupport{
 
   post("/users/create") {
@@ -24,6 +27,22 @@ trait UserRoutes extends SlickRoutes with AuthenticationSupport{
     val query = {params("query")}
 
     User.searchUserName(query).map(_.filterNot(_.id == userId))
+  }
+
+  post("/users/validate/username") {
+    contentType = formats("json")
+
+    val username = {params("username")}
+
+    User.validUsername(username) && Await.result(User.uniqueUsername(username), Duration.Inf)
+  }
+
+  post("/users/validate/email") {
+    contentType = formats("json")
+
+    val email = {params("email")}
+
+    User.validEmail(email) && Await.result(User.uniqueEmail(email), Duration.Inf)
   }
 
   post("/users/connections/create") {
