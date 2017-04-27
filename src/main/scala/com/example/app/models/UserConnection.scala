@@ -56,18 +56,6 @@ object UserConnection extends SlickDbObject[UserConnection, (Int, Int, Int), Tab
     } yield (r diff s)
   }
 
-  def suggestedConnectionsFor(userId: Int) = {
-    db.run(
-      (for {
-        myUserConnections <- table.filter(_.senderUserId === userId)
-        theirUserConnections <- table if myUserConnections.receiverUserId === theirUserConnections.senderUserId
-        users <- User.table if users.id === theirUserConnections.receiverUserId
-      } yield (users)
-
-        ).result
-    ).map(_.map(User.reify).map(_.toJson))
-  }
-
   def allSuggestedConnectionsFor(userId: Int) = {
     val sent = Await.result(getReceiversBySenderId(userId), Duration.Inf)
 
@@ -77,7 +65,7 @@ object UserConnection extends SlickDbObject[UserConnection, (Int, Int, Int), Tab
       (for {
         myUserConnections <- table.filter(_.senderUserId === userId)
         theirUserConnections <- table if myUserConnections.receiverUserId === theirUserConnections.senderUserId
-        users <- User.table if users.id === theirUserConnections.receiverUserId
+        users <- User.table if users.id === theirUserConnections.receiverUserId && users.id =!= userId
       } yield (users)
 
         ).result
