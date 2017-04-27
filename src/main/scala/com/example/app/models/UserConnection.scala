@@ -4,7 +4,8 @@ import com.example.app.{HasIntId, PushNotificationManager, SlickDbObject, Tables
 import slick.driver.PostgresDriver.api._
 
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{Await, Future}
+import scala.concurrent.duration.Duration
 
 case class UserConnection(id: Int = 0, senderUserId: Int, receiverUserId: Int) extends HasIntId[UserConnection]{
 
@@ -43,6 +44,47 @@ object UserConnection extends SlickDbObject[UserConnection, (Int, Int, Int), Tab
         Future.apply(optionalConnection.get)
       }
     })
+  }
+
+  def awaitingConnectionsFor(userId: Int) = {
+    val sent = getReceiversBySenderId(userId)
+    val received = getSendersByReceiverId(userId)
+
+    for {
+      s <- sent
+      r <- received
+    } yield (r diff s)
+  }
+
+  def suggestedConnectionsFor(userId: Int) = {
+    db.run(
+      (for {
+        myUserConnections <- table.filter(_.senderUserId === userId)
+        theirUserConnections <- table if myUserConnections.receiverUserId === theirUserConnections.senderUserId
+        users <- User.table if users.id === theirUserConnections.receiverUserId
+      } yield (users)
+
+        ).result
+    ).map(_.map(User.reify).map(_.toJson))
+  }
+
+  def allSuggestedConnectionsFor(userId: Int) = {
+    val sent = Await.result(getReceiversBySenderId(userId), Duration.Inf)
+
+    val received = Await.result(getSendersByReceiverId(userId), Duration.Inf)
+
+    val suggestions = Await.result(db.run(
+      (for {
+        myUserConnections <- table.filter(_.senderUserId === userId)
+        theirUserConnections <- table if myUserConnections.receiverUserId === theirUserConnections.senderUserId
+        users <- User.table if users.id === theirUserConnections.receiverUserId
+      } yield (users)
+
+        ).result
+    ).map(_.map(User.reify).map(_.toJson)), Duration.Inf)
+
+    (suggestions ++ received).distinct diff sent
+
   }
 
   def findConnection(senderUserId: Int, receiverUserId: Int) =

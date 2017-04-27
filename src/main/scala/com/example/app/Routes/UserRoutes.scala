@@ -4,7 +4,7 @@ import com.example.app.models._
 import com.example.app.{AuthenticationSupport, SessionTokenStrategy, SlickRoutes}
 import org.scalatra.Ok
 
-import scala.concurrent.Await
+import scala.concurrent.{Await, Future}
 import scala.concurrent.duration.Duration
 
 trait UserRoutes extends SlickRoutes with AuthenticationSupport{
@@ -81,13 +81,14 @@ trait UserRoutes extends SlickRoutes with AuthenticationSupport{
     contentType = formats("json")
     authenticate()
 
-    val sent = UserConnection.getReceiversBySenderId(user.id)
-    val received = UserConnection.getSendersByReceiverId(user.id)
+    UserConnection.awaitingConnectionsFor(user.id)
+  }
 
-    for {
-      s <- sent
-      r <- received
-    } yield (r diff s)
+  get("/users/connections/suggested") {
+    contentType = formats("json")
+    authenticate()
+
+    UserConnection.allSuggestedConnectionsFor(user.id)
   }
 
   get("/users") {
