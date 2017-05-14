@@ -26,7 +26,12 @@ object PushNotificationManager {
   //val developerGateway = "gateway.sandbox.push.apple.com"
   //val productionGateway = "gateway.push.apple.com"
   connect()
-  timedReset()
+
+  val t = new java.util.Timer()
+  val task = new java.util.TimerTask {
+    def run() = resetConnection()
+  }
+  t.schedule(task, 1000 * 60 * 30, 1000 * 60 * 30)
 
   def connect(): Unit = {
     val jfuture: JFuture[Void] = apnsClient.connect(ApnsClient.PRODUCTION_APNS_HOST)
@@ -43,14 +48,6 @@ object PushNotificationManager {
     System.out.println("resetting connection...")
     apnsClient.disconnect()
     connect()
-  }
-
-  def timedReset() = {
-    val t = new java.util.Timer()
-    val task = new java.util.TimerTask {
-      def run() = resetConnection()
-    }
-    t.schedule(task, 1000 * 60 * 30, 1000 * 60 * 30)
   }
 
   def pushNotificationsFor(message: String, userIds: Seq[Int]) = {
